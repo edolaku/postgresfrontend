@@ -24,6 +24,7 @@ const PersistLogin = () => {
             } finally {
                 isMounted && setIsLoading(false);
                 // console.log('auth dari PersistLogin: ', auth);
+                console.log('ismounted dari PersistLogin: ', isMounted);
 
             }
         }
@@ -34,11 +35,12 @@ const PersistLogin = () => {
             verifyRefreshToken() :
             // console.log('proses verify refresh token dari PersistLogin'):
             setIsLoading(false);
+
         return () => {
             isMounted = false
             controller.abort()
         };
-    }, [ auth, refresh ]);
+    }, [refresh]);
 
     // useEffect(() => {
     //     console.log(`auth dari PersistLogin: ${JSON.stringify(auth)}`);
