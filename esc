@@ -1,0 +1,23 @@
+[33mcommit 16b74010a2f1bed0c219ffa15fbf2adaa2fea6fd[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: edolaku <edoooq@gmail.com>
+Date:   Mon Oct 14 15:56:14 2024 +0700
+
+    masih pada persist login yg error
+
+[33mcommit e7fc54b5c965544590c7cd2d8673322833c2f363[m
+Author: edolaku <edoooq@gmail.com>
+Date:   Mon Oct 7 15:49:38 2024 +0700
+
+    akan melanjutkan setPersist ke localStorage
+
+[33mcommit 921630d3fd864472933432a137a1dce3d589d851[m
+Author: edolaku <edoooq@gmail.com>
+Date:   Mon Oct 7 14:34:24 2024 +0700
+
+    coba
+
+[33mcommit 09c7e64ca10f3894defaf912d8f8ef11ed6b446a[m
+Author: edolaku <edoooq@gmail.com>
+Date:   Mon Oct 7 14:18:47 2024 +0700
+
+    tambah baru
