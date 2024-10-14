@@ -42,12 +42,13 @@ const PersistLogin = () => {
             console.log('proses verify refresh token dari PersistLogin')
         } else {
             setIsLoading(false);
+        };
 
         return () => {
             isMounted = false
             // controller.abort()
-        };
-    }, [auth, refresh]);
+        }, [auth, refresh]
+    })
 
     // useEffect(() => {
     //     console.log(`auth dari PersistLogin: ${JSON.stringify(auth)}`);
