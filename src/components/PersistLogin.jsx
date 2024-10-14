@@ -13,12 +13,12 @@ const PersistLogin = () => {
 
     useEffect(() => {
         let isMounted = true;
-        const controller = new AbortController();
+        // const controller = new AbortController();
         const verifyRefreshToken = async () => {
             try {
-                const signal = controller.signal
+                // const signal = controller.signal
                 // console.log('proses refresh token dari PersistLogin');
-                await refresh(signal);
+                await refresh();
             } catch (err) {
                 console.error(err);
             } finally {
@@ -27,18 +27,26 @@ const PersistLogin = () => {
 
             }
         }
-        console.log('auth dari PersistLogin: ', JSON.stringify(auth));
+        console.info('auth dari PersistLogin: ', JSON.stringify(auth));
 
 
-        !auth?.accessToken ?
-            verifyRefreshToken() :
-            // console.log('proses verify refresh token dari PersistLogin'):
+        // !auth?.accessToken ?
+        // verifyRefreshToken() :
+        // console.log('proses verify refresh token dari PersistLogin')
+        //     setIsLoading(false);
+
+        if (!auth?.accessToken) {
+            verifyRefreshToken();
+            console.log('proses verify refresh token dari PersistLogin')
+        } else {
             setIsLoading(false);
+        }
+
         return () => {
             isMounted = false
-            controller.abort()
+            // controller.abort()
         };
-    }, [ auth, refresh ]);
+    }, [auth, refresh]);
 
     // useEffect(() => {
     //     console.log(`auth dari PersistLogin: ${JSON.stringify(auth)}`);
