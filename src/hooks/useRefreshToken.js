@@ -11,11 +11,13 @@ const useRefreshToken = () => {
                 withCredentials: true,
                 signal
             })
-            console.log('response dari useRefreshToken: ', JSON.stringify(response.data));
+            // console.log('response dari useRefreshToken: ', JSON.stringify(response.data));
+            console.log('proses refresh token dari useRefreshToken');
+
 
             setAuth(prev => {
-                console.log('prev dari useRefreshToken: ', prev);
-                console.log('response.data dari useRefreshToken: ', response.data);
+                // console.log('prev dari useRefreshToken: ', prev);
+                // console.log('response.data dari useRefreshToken: ', response.data);
 
                 return { ...prev, ...response.data }
             })

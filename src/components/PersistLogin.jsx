@@ -18,12 +18,14 @@ const PersistLogin = () => {
             try {
                 // const signal = controller.signal
                 // console.log('proses refresh token dari PersistLogin');
-                await refresh();
+                await refresh(signal);
+                console.log('auth dari PersistLogin: ', JSON.stringify(auth));
             } catch (err) {
                 console.error(err);
             } finally {
                 isMounted && setIsLoading(false);
                 // console.log('auth dari PersistLogin: ', auth);
+                console.log('ismounted dari PersistLogin: ', isMounted);
 
             }
         }
@@ -40,7 +42,6 @@ const PersistLogin = () => {
             console.log('proses verify refresh token dari PersistLogin')
         } else {
             setIsLoading(false);
-        }
 
         return () => {
             isMounted = false
