@@ -9,7 +9,7 @@ import useAuth from "../hooks/useAuth";
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
-    const { auth } = useAuth();
+    const { auth, persist } = useAuth();
 
     useEffect(() => {
         let isMounted = true;
@@ -48,7 +48,7 @@ const PersistLogin = () => {
             isMounted = false
             // controller.abort()
         }
-    }, [ auth?.accessToken, refresh ]
+    }, [auth?.accessToken, refresh, isLoading]
     )
 
     // useEffect(() => {
@@ -59,7 +59,16 @@ const PersistLogin = () => {
     return (
         <>
             {/* <Outlet /> merepresentasikan semua child component atau route child didalamnya */}
-            {isLoading ? <p>Loading...</p> : <Outlet />}
+            {
+                // jika persist falsy, maka render <Outlet />
+                // jika persist truthy, maka render cek isLoading, jika isLoading dicek, maka akan-
+                // melakukan proses refresh token
+                !persist
+                    ? <Outlet />
+                    : isLoading
+                        ? <p>Loading...</p>
+                        : <Outlet />
+            }
             {/* {auth?.accessToken ? <Outlet /> : <p>Loading...</p>} */}
         </>
     )

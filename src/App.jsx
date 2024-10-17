@@ -1,4 +1,3 @@
-import './App.css'
 import Layout from './components/Layout'
 import LinkPage from './components/Linkage'
 import Login from './components/Login'

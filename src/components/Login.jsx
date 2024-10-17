@@ -7,7 +7,7 @@ const LOGIN_URL = '/auth';
 
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
     // console.log("setAuth dari Login.jsx: ", setAuth);
 
 
@@ -95,6 +95,16 @@ const Login = () => {
                 />
 
                 <button>Sign In</button>
+
+                <div className="persistCheck">
+                    <input
+                        type="checkbox"
+                        id="persist"
+                        onChange={() => setPersist(prev => !prev)}
+                        checked={persist}
+                    />
+                    <label htmlFor="persist">Trust this device</label>
+                </div>
 
                 <p>
                     Need an Account?<br />
