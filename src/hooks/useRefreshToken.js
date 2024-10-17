@@ -1,19 +1,21 @@
+import { useState } from "react";
 import axios from "../api/axios"
 import useAuth from "./useAuth"
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
+    const [getAuth, setGetAuth] = useState({});
 
 
-    const refresh = async (signal) => {
+    const refresh = async () => {
         try {
             const response = await axios.get('/refresh', {
                 withCredentials: true,
-                signal
             })
-            // console.log('response dari useRefreshToken: ', JSON.stringify(response.data));
-            console.log('proses refresh token dari useRefreshToken');
-
+            console.log('response dari useRefreshToken: ', JSON.stringify(response.data.username));
+            // console.log('proses refresh token dari useRefreshToken');
+            setGetAuth(response.data);
+            console.log('getAuth dari useRefreshToken: ', getAuth.username);
 
             setAuth(prev => {
                 // console.log('prev dari useRefreshToken: ', prev);

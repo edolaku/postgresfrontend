@@ -18,8 +18,8 @@ const PersistLogin = () => {
             try {
                 // const signal = controller.signal
                 // console.log('proses refresh token dari PersistLogin');
-                await refresh(signal);
-                console.log('auth dari PersistLogin: ', JSON.stringify(auth));
+                await refresh();
+                // console.log('auth dari PersistLogin: ', JSON.stringify(auth));
             } catch (err) {
                 console.error(err);
             } finally {
@@ -29,7 +29,7 @@ const PersistLogin = () => {
 
             }
         }
-        console.info('auth dari PersistLogin: ', JSON.stringify(auth));
+        // console.info('auth dari PersistLogin: ', JSON.stringify(auth));
 
 
         // !auth?.accessToken ?
@@ -47,9 +47,9 @@ const PersistLogin = () => {
         return () => {
             isMounted = false
             // controller.abort()
-        }, [auth, refresh]
-    })
-    // coba
+        }
+    }, [ auth?.accessToken, refresh ]
+    )
 
     // useEffect(() => {
     //     console.log(`auth dari PersistLogin: ${JSON.stringify(auth)}`);

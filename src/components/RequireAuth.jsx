@@ -11,7 +11,7 @@ const RequireAuth = ({ allowedRoles }) => {
     // eslint-disable-next-line react/prop-types
     const result = allowedRoles.some(role => auth?.role?.includes(role));
     // console.log("result dari RequireAuth: ", result);
-    console.log("auth dari RequireAuth: ", auth);
+    // console.log("auth dari RequireAuth: ", auth);
 
 
 
