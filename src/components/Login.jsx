@@ -2,12 +2,13 @@ import { useRef, useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth.js";
-import useLocalStorage from "../hooks/useLocalStorage.js";
+import useInput from "../hooks/useInput.js";
+import useToggle from "../hooks/useToggle.js";
 const LOGIN_URL = '/auth';
 
 
 const Login = () => {
-    const { setAuth, persist, setPersist } = useAuth();
+    const { setAuth } = useAuth();
     // console.log("setAuth dari Login.jsx: ", setAuth);
 
 
@@ -20,9 +21,12 @@ const Login = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useLocalStorage('username', '') // useState('');
+    // digunakan agar inputan username dapat tetap terisi dari history
+    const [username, usernameAttrib, resetUsername] = useInput('user', '') // useState('');
+
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [check, toggleCheck] = useToggle('persist', false);
 
 
     useEffect(() => {
@@ -47,7 +51,7 @@ const Login = () => {
             const bidang = response?.data?.bidang;
             setAuth({ username, password, role, bidang, accessToken })
 
-            setUsername('');
+            resetUsername('');
             setPassword('');
             navigate(from, { replace: true });
         } catch (err) {
@@ -66,13 +70,13 @@ const Login = () => {
         // console.log('password: ', password);
     }
 
-    const togglePersist = () => {
-        setPersist(prev => !prev);
-    }
+    // const togglePersist = () => {
+    //     setPersist(prev => !prev);
+    // }
 
-    useEffect(() => {
-        localStorage.setItem("persist", persist);
-    }, [persist])
+    // useEffect(() => {
+    //     localStorage.setItem("persist", persist);
+    // }, [persist])
 
     return (
         <section>
@@ -88,8 +92,7 @@ const Login = () => {
                     id="username"
                     ref={userRef}
                     autoComplete="off"
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
+                    {...usernameAttrib}
                 // required
                 />
 
@@ -109,8 +112,8 @@ const Login = () => {
                     <input
                         type="checkbox"
                         id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
+                        onChange={toggleCheck}
+                        checked={check}
                     />
                     <label htmlFor="persist">Trust this device</label>
                 </div>
