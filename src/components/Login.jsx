@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom";
-
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth.js";
+import useLocalStorage from "../hooks/useLocalStorage.js";
 const LOGIN_URL = '/auth';
 
 
@@ -20,7 +20,7 @@ const Login = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useLocalStorage('username', '') // useState('');
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
@@ -66,6 +66,14 @@ const Login = () => {
         // console.log('password: ', password);
     }
 
+    const togglePersist = () => {
+        setPersist(prev => !prev);
+    }
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist);
+    }, [persist])
+
     return (
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
@@ -96,11 +104,12 @@ const Login = () => {
 
                 <button>Sign In</button>
 
+                {/* tombol tetap login */}
                 <div className="persistCheck">
                     <input
                         type="checkbox"
                         id="persist"
-                        onChange={() => setPersist(prev => !prev)}
+                        onChange={togglePersist}
                         checked={persist}
                     />
                     <label htmlFor="persist">Trust this device</label>

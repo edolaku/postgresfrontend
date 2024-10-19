@@ -31,12 +31,6 @@ const PersistLogin = () => {
         }
         // console.info('auth dari PersistLogin: ', JSON.stringify(auth));
 
-
-        // !auth?.accessToken ?
-        // verifyRefreshToken() :
-        // console.log('proses verify refresh token dari PersistLogin')
-        //     setIsLoading(false);
-
         if (!auth?.accessToken) {
             verifyRefreshToken();
             console.log('proses verify refresh token dari PersistLogin')
@@ -60,9 +54,11 @@ const PersistLogin = () => {
         <>
             {/* <Outlet /> merepresentasikan semua child component atau route child didalamnya */}
             {
-                // jika persist falsy, maka render <Outlet />
+                // jika persist falsy, maka render <Outlet /> yang tidak menggunakan refresh token-
+                // sehingga akan logout
                 // jika persist truthy, maka render cek isLoading, jika isLoading dicek, maka akan-
-                // melakukan proses refresh token
+                // melakukan proses refresh token, sehingga jika access token atau refresh token-
+                // masih aktif, akan tetap login
                 !persist
                     ? <Outlet />
                     : isLoading
