@@ -20,7 +20,9 @@ const RequireAuth = ({ allowedRoles }) => {
     // eslint-disable-next-line react/prop-types
     const result = allowedRoles.some(r => role?.includes(r));
     // console.log("result dari RequireAuth: ", result);
-    console.log("auth dari RequireAuth: ", auth);
+    // console.log("auth dari RequireAuth: ", auth);
+    // console.log('decoded dari RequireAuth: ', Boolean(decoded?.userInfo?.username));
+    
 
 
 
@@ -30,7 +32,7 @@ const RequireAuth = ({ allowedRoles }) => {
         result
             ?
             <Outlet />
-            : username
+            : decoded?.userInfo?.username
                 ? <Navigate to="/unauthorized" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />
     )
