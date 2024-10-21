@@ -1,5 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 // ambil allowedRoles dari app.jsx
 // eslint-disable-next-line react/prop-types
@@ -7,11 +8,19 @@ const RequireAuth = ({ allowedRoles }) => {
     // console.log("allowedRoles dari RequireAuth: ", allowedRoles);
     const { auth } = useAuth();
     const location = useLocation();
-    
+
+    const decoded = auth?.accessToken
+        ? jwtDecode(auth.accessToken)
+        : undefined;
+
+    const role = decoded?.userInfo?.role || [];
+    const username = decoded?.userInfo?.username || [];
+    const bidang = decoded?.userInfo?.bidang || [];
+
     // eslint-disable-next-line react/prop-types
-    const result = allowedRoles.some(role => auth?.role?.includes(role));
+    const result = allowedRoles.some(r => role?.includes(r));
     // console.log("result dari RequireAuth: ", result);
-    // console.log("auth dari RequireAuth: ", auth);
+    console.log("auth dari RequireAuth: ", auth);
 
 
 
@@ -21,7 +30,7 @@ const RequireAuth = ({ allowedRoles }) => {
         result
             ?
             <Outlet />
-            : auth?.username
+            : username
                 ? <Navigate to="/unauthorized" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />
     )

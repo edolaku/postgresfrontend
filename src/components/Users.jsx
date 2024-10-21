@@ -19,8 +19,10 @@ const Users = () => {
                 const response = await axiosPrivate.get('/users', {
                     signal: controller.signal
                 })
+                // agar tidak semua dari response disediakan, hanya yg diperlukan saja:
+                const userNames = response.data.map(user => user.username)
                 console.log("response dari Users: ", response)
-                isMounted && setUsers(response.data)
+                isMounted && setUsers(userNames)
             } catch (error) {
                 // console.error(error)
                 console.log('error dari Users ', error.response?.status)
@@ -53,7 +55,7 @@ const Users = () => {
                         {
                             users.map((user, index) => (
                                 <li key={index}>
-                                    {user?.username}
+                                    {user}
                                 </li>
                             ))
                         }

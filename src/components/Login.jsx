@@ -47,9 +47,14 @@ const Login = () => {
             // console.log("response dari Login.jsx: ", JSON.stringify(response.data));
 
             const accessToken = response?.data?.accessToken;
-            const role = response?.data?.role;
-            const bidang = response?.data?.bidang;
-            setAuth({ username, password, role, bidang, accessToken })
+            // const role = response?.data?.role;
+            // const bidang = response?.data?.bidang;
+            setAuth({
+                accessToken,
+                // username,
+                // role,
+                // bidang,
+            })
 
             resetUsername('');
             setPassword('');
