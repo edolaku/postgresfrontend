@@ -1,43 +1,29 @@
-import Layout from './components/Layout'
-import LinkPage from './components/Linkage'
-import Login from './components/Login'
-import Register from './components/Register'
-import { Routes, Route } from 'react-router-dom'
-import Unauthorized from './components/Unauthorized'
-import Home from './components/Home'
-import Editor from './components/Editor'
-import Admin from './components/Admin'
-import Lounge from './components/Lounge'
-import Missing from './components/Missing'
-import RequireAuth from './components/RequireAuth'
-import PersistLogin from './components/PersistLogin'
+import { Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import Public from "./components/Public"
+import Login from "./components/Login"
+import Welcome from "./components/Welcome"
+import RequireAuth from "./components/RequireAuth"
+import UsersList from "./features/users/UsersList"
+
+
+
 
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />} >
+      <Route path="/" element={<Layout />}>
         {/* public routes */}
-        <Route path='/login' element={<Login />} />
-        <Route path="/linkpage" element={<LinkPage />} />
-        <Route path='/unauthorized' element={<Unauthorized />} />
+        <Route index element={<Public />} />
+        <Route path="login" element={<Login />} />
 
-        {/* we want to protect this route */}
-        <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={['admin', 'user']} />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/editor' element={<Editor />} />
-          </Route>
-
-          <Route element={<RequireAuth allowedRoles={['admin']} />}>
-            <Route path='/admin' element={<Admin />} />
-            <Route path='/lounge' element={<Lounge />} />
-            <Route path='/register' element={<Register />} />
-          </Route>
+        {/* protected routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="welcome" element={<Welcome />} />
+          <Route path="users" element={<UsersList />} />
         </Route>
 
-        {/* catch all */}
-        <Route path='*' element={<Missing />} />
       </Route>
     </Routes>
   )
