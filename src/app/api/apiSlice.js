@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logout } from '../../features/auth/authSlice'
 
-const baseQuery = fetchBaseQuery({
+const baseQuerye = fetchBaseQuery({
     baseUrl: 'http://localhost:3001',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
@@ -16,14 +16,14 @@ const baseQuery = fetchBaseQuery({
 })
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions)
+    let result = await baseQuerye(args, api, extraOptions)
     console.log('result dari apiSlice.js: ', result);
 
     if (result?.error?.originalStatus === 403) {
         console.log('sending refresh token');
 
         // send refresh token to get new access token:
-        const refreshResult = await baseQuery('/refresh', api, extraOptions)
+        const refreshResult = await baseQuerye('/refresh', api, extraOptions)
         console.log('refreshResult dari apiSlice.js: ', refreshResult);
 
         if (refreshResult?.data) {
@@ -33,7 +33,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             api.dispatch(setCredentials({ ...refreshResult.data, username }))
 
             // retry original query with new access token
-            result = await baseQuery(args, api, extraOptions)
+            result = await baseQuerye(args, api, extraOptions)
         } else {
             api.dispatch(logout())
         }
@@ -43,5 +43,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
+    // eslint-disable-next-line no-unused-vars
     endpoints: builder => ({})
 })
