@@ -28,6 +28,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
         if (refreshResult?.data) {
             const username = api.getState().auth.username
+            console.log('username dari apiSlice.js: ', username);
 
             // store the new token
             api.dispatch(setCredentials({ ...refreshResult.data, username }))
