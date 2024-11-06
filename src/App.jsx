@@ -8,6 +8,7 @@ import UsersList from "./features/users/UsersList"
 import Unauthorized from "./components/Unauthorized"
 import PersistLogin from "./features/persistLogin/PersistLogin"
 import Missing from "./components/Missing"
+import Logout from "./components/Logout"
 
 
 
@@ -21,8 +22,8 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
         <Route path="unauthorized" element={<Unauthorized />} />
-        {/* <Route path="persist" element={<PersistLogin />} /> */}
-
+        <Route path="logout" element={<Logout />} />
+        
         {/* protected routes */}
         <Route element={<PersistLogin />}>
 

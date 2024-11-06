@@ -16,6 +16,7 @@ const baseQuerye = fetchBaseQuery({
 })
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
+    console.log('api dari apiSlice.js: ', api.getState());
     let result = await baseQuerye(args, api, extraOptions)
     console.log('result dari apiSlice.js: ', result);
 
