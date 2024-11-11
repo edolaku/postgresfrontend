@@ -33,7 +33,7 @@ const Login = () => {
         e.preventDefault()
         try {
             const userData = await login({ username, password }).unwrap()
-            // console.log('userData dari login: ', userData);
+            console.log('userData dari login: ', userData);
             // console.log('username dari login: ', username);
 
 

@@ -1,16 +1,19 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-
-const logoutApiSlice = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001' }),
+export const logoutApiSlice = createApi({
+    reducerPath: 'logoutApi', // Unik untuk slice ini
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:3001',
+        credentials: 'include',
+    }),
     endpoints: builder => ({
         logout: builder.mutation({
             query: () => ({
-                url: '/auth',
+                url: '/logout',
                 method: 'GET',
-            })
-        })
-    })
-})
+            }),
+        }),
+    }),
+});
 
-export const { useLogoutMutation } = logoutApiSlice
+export const { useLogoutMutation } = logoutApiSlice;

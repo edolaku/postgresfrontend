@@ -6,6 +6,7 @@ const baseQuerye = fetchBaseQuery({
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token
+        // console.log('token dari apiSlice.js: ', token);
 
         if (token) {
             headers.set('authorization', `Bearer ${token}`)
@@ -16,7 +17,7 @@ const baseQuerye = fetchBaseQuery({
 })
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-    console.log('api dari apiSlice.js: ', api.getState());
+    // console.log('api dari apiSlice.js: ', api);
     let result = await baseQuerye(args, api, extraOptions)
     console.log('result dari apiSlice.js: ', result);
 
@@ -25,7 +26,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
         // send refresh token to get new access token:
         const refreshResult = await baseQuerye('/refresh', api, extraOptions)
-        console.log('refreshResult dari apiSlice.js: ', refreshResult);
+        // console.log('refreshResult dari apiSlice.js: ', extraOptions);
 
         if (refreshResult?.data) {
             const username = api.getState().auth.username

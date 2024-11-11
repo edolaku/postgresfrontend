@@ -12,11 +12,10 @@ const UsersList = () => {
 
     let content
     if (isLoading) {
-        content = <p>Loading...</p>
+        content = <p>Loadingggggg...</p>
     } else if (isSuccess) {
         content = (
             <section className="users">
-                <h1>Users List</h1>
                 <ul>
                     {
                         users.map((user, i) => {
@@ -30,7 +29,12 @@ const UsersList = () => {
     } else if (isError) {
         content = <p>{JSON.stringify(error)}</p>
     }
-    return content
+    return (
+        <>
+            <h1>Users List</h1>
+            {content}
+        </>
+    )
 }
 
 export default UsersList

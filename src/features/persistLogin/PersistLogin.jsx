@@ -5,6 +5,7 @@ import { selectCurrentToken, setCredentials } from "../auth/authSlice";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
+
 const PersistLogin = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -46,15 +47,20 @@ const PersistLogin = () => {
 
     let content
     if (isLoading || persistResult.isLoading) {
-        console.log("loading dari PersistLogin : ", isLoading, persistResult.isLoading);
+        // console.log("loading dari PersistLogin : ", isLoading, persistResult.isLoading);
 
-        content = <p>Loading...</p>
+        content = (
+            <>
+                {/* <Layout /> */}
+                <p>Loadinggggg...</p>
+            </>
+        )
     } else {
         if (!tokenExist) {
             console.log("persist result not ok");
             return <Navigate to="/login" state={{ from: location }} replace />
         } else {
-            console.log("persist result ok");
+            // console.log("persist result ok");
             content = <Outlet />
         }
     }

@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
-import { selectCurrentUser, selectCurrentToken } from "../features/auth/authSlice";
-import useLogout from "@/hooks/useLogout";
+import { selectCurrentUser, selectCurrentToken } from "@/features/auth/authSlice";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 
 const Welcome = () => {
