@@ -6,6 +6,7 @@ import { useLoginMutation } from "../features/auth/authApiSlice"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { LoaderCircle } from "lucide-react"
 
 const Login = () => {
     const userRef = useRef()
@@ -16,7 +17,9 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
 
-    const [login, { isLoading }] = useLoginMutation()
+    const [login, { isLoading, }] = useLoginMutation()
+
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -33,7 +36,7 @@ const Login = () => {
         e.preventDefault()
         try {
             const userData = await login({ username, password }).unwrap()
-            console.log('userData dari login: ', userData);
+            // console.log('userData dari login: ', userData);
             // console.log('username dari login: ', username);
 
 
@@ -60,7 +63,7 @@ const Login = () => {
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
 
-    const content = isLoading ? <p>Loading...</p> : (
+    const content = (
         <div className="flex items-center justify-center min-h-screen">
             <div className="container md:w-1/4 mx-auto bg-slate-300 rounded-lg p-4">
                 <section className="login">
@@ -91,7 +94,10 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <Button disabled={isLoading} type="submit">Sign In</Button>
+                        <Button disabled={isLoading} type="submit">
+                            {isLoading && <LoaderCircle className="animate-spin" />}
+                            Sign In
+                        </Button>
                     </form>
                 </section>
             </div>

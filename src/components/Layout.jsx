@@ -8,12 +8,18 @@ const Layout = () => {
         <>
             <SidebarProvider>
                 <SidebarLayout />
-                <main>
-                    <SidebarTrigger />
-                    <div className="px-7">
-                    <Outlet />
+
+                <div className="h-lvh bg-gray-100">
+                    <SidebarTrigger className='' />
+                </div>
+
+                <main className="flex w-full p-4 bg-gray-100">
+                    {/* <div className="container mx-auto"> */}
+                    <div className="w-full">
+                        <Outlet />
                     </div>
                 </main>
+
             </SidebarProvider>
         </>
     )

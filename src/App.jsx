@@ -4,11 +4,14 @@ import Public from "./components/pages/Public"
 import Login from "./components/Login"
 import Welcome from "./components/pages/Welcome"
 import RequireAuth from "./components/RequireAuth"
-import UsersList from "./features/users/UsersList"
+import UsersList from "./components/pages/UsersList"
 import Unauthorized from "./components/pages/Unauthorized"
 import PersistLogin from "./features/persistLogin/PersistLogin"
 import Missing from "./components/pages/Missing"
 import Logout from "./components/Logout"
+import PgwList from "./components/pages/Pegawai"
+import PegawaiAdd from "./components/pages/PegawaiAdd"
+import PegawaiEdit from "./components/pages/PegawaiEdit"
 
 const ADMIN = ['admin']
 const USER = ['admin', 'user']
@@ -38,6 +41,9 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={ADMIN} />}>
               <Route path="users" element={<UsersList />} />
+              <Route path="pegawai" element={<PgwList />} />
+              <Route path="pegawai/edit/:id" element={<PegawaiEdit />} />
+              <Route path="pegawai/addpegawai" element={<PegawaiAdd />} />
             </Route>
           </Route>
         </Route>

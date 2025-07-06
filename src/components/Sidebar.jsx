@@ -1,6 +1,14 @@
-import { User, Home, Users, Locate, File, Files, SquareChartGantt, LogOut as LogoutIcon } from "lucide-react";
+import { User, Home, Users, Locate, File, Files, SquareChartGantt, LogOut as LogoutIcon, UserCheck } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../features/auth/authSlice";
+import { jwtDecode } from 'jwt-decode'
 
+
+
+const ADMIN = ['admin']
+const USER = ['admin', 'user']
 
 
 const menuList = [{
@@ -9,22 +17,32 @@ const menuList = [{
         {
             title: "Home",
             href: "/welcome",
-            icon: Home
+            icon: Home,
+            allowedRoles: USER
         },
         {
             title: 'Users',
             href: '/users',
-            icon: Users
+            icon: Users,
+            allowedRoles: ADMIN
+        },
+        {
+            title: 'Pegawai',
+            href: '/pegawai',
+            icon: UserCheck,
+            allowedRoles: ADMIN
         },
         {
             title: 'Profile',
             href: '/profile',
-            icon: Locate
+            icon: Locate,
+            allowedRoles: USER
         },
         {
             title: 'About',
             href: '/about',
-            icon: User
+            icon: User,
+            allowedRoles: USER
         }
     ]
 },
@@ -34,27 +52,42 @@ const menuList = [{
         {
             title: 'Sub Kegiatan',
             href: '/subkegiatan',
-            icon: Files
+            icon: Files,
+            allowedRoles: ADMIN
         },
         {
             title: 'Aktifitas Pengawasan',
             href: '/aktifitas',
-            icon: File
+            icon: File,
+            allowedRoles: USER
         },
         {
             title: 'Rincian',
             href: '/rincian',
-            icon: SquareChartGantt
+            icon: SquareChartGantt,
+            allowedRoles: USER
         }
     ]
 }]
 
-const handleMenuItemClick = (e, href) => {
-    e.preventDefault(); // prevent default link behavior
-    window.location.href = href; // navigate to the desired URL
-}
 
 const SidebarLayout = () => {
+
+    const token = useSelector(selectCurrentToken);
+    // Jika token belum ada, tunggu hingga Redux state terupdate
+    if (!token) {
+        // Bisa merender placeholder atau null sementara menunggu token tersedia
+        console.log('tunggu');
+        return null;
+        // return <p>Loading...</p>;
+    }
+
+    const roleUser = token ? jwtDecode(token).userInfo.role : null
+    // console.log('decoded dari RequireAuth: ', decoded);
+    // const role = decoded ? decoded.userInfo.role : []
+
+
+
     return (
         <Sidebar collapsible="icon">
             <SidebarContent>
@@ -68,18 +101,20 @@ const SidebarLayout = () => {
                                 <SidebarGroupContent>
                                     <SidebarMenu>
                                         {
-                                            menu.items.map((item, index) => {
-                                                return (
-                                                    <SidebarMenuItem key={index}>
-                                                        <SidebarMenuButton asChild onClick={(e) => handleMenuItemClick(e, item.href)}>
-                                                            <a href={item.href}>
-                                                                <item.icon />
-                                                                <span>{item.title}</span>
-                                                            </a>
-                                                        </SidebarMenuButton>
-                                                    </SidebarMenuItem>
-                                                )
-                                            })
+                                            menu.items
+                                                .filter(item => item.allowedRoles.includes(roleUser)) // filter menu allowedRoles dari user yg login
+                                                .map((item, index) => {
+                                                    return (
+                                                        <SidebarMenuItem key={index}>
+                                                            <SidebarMenuButton asChild>
+                                                                <Link to={item.href}>
+                                                                    <item.icon />
+                                                                    <span>{item.title}</span>
+                                                                </Link>
+                                                            </SidebarMenuButton>
+                                                        </SidebarMenuItem>
+                                                    )
+                                                })
                                         }
                                     </SidebarMenu>
                                 </SidebarGroupContent>
@@ -94,11 +129,10 @@ const SidebarLayout = () => {
                     <SidebarMenu>
                         <SidebarMenuItem >
                             <SidebarMenuButton className="bg-black hover:bg-gray-700 active:bg-gray-800 focus:outline-none focus:ring focus:ring-gray-300 text-white" asChild>
-                                <a href="/logout">
+                                <Link to="/logout">
                                     <LogoutIcon />
                                     <span className="font-bold text-white">Logout</span>
-                                </a>
-
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>

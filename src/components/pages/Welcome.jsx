@@ -20,7 +20,7 @@ const Welcome = () => {
             <h1>{welcome}</h1>
             <p>Token: {tokenAbbreviation}</p>
             <p><Link to="/users">Users List</Link></p>
-            <Button ><Link to="/logout">Logout</Link></Button>
+            <Link to="/logout"><Button >Logout</Button></Link>
         </section>
     )
     return content
